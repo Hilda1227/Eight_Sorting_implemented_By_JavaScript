@@ -92,6 +92,21 @@ function QuickSort(arr, l, r) {
     }
 }
 
+// 非递归实现，不用修改寻找分裂点的代码，只用将每次得出分裂点后，将两边的范围放进栈里，只要栈不为空，下次循环就取出栈顶元素，再求分裂点，以此循环
+function IteratorQuickSort(arr, low, high) {
+    let queue = [[low, high]];
+    while(queue.length > 0){
+        let [l, r] = queue.pop();
+        let s = Partition(arr, l, r);
+        if(s - 1 > l){
+            queue.push([l, s - 1]);
+        }
+        if(s + 1 < r){
+            queue.push([s + 1, r]);
+        }
+    }
+}
+
 function HeapAdjust(arr, r, i) {
     var left = 2 * i + 1, 
         right = 2 * i + 2, 
@@ -138,6 +153,7 @@ function ShellInsertSort(arr) {
         }
     }
 }
+
 function RadixLSDSort(arr, n){
     var max = arr[0]
     var min = arr[0]
@@ -167,12 +183,14 @@ function RadixLSDSort(arr, n){
     return arr
  }
 
+
 module.exports = {
     InsertSort,
     SelectSort,
     BubbleSort,
     MergeSort,
     QuickSort,
+    IteratorQuickSort,
     HeapSort,
     ShellInsertSort,
     RadixLSDSort
